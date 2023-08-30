@@ -20,7 +20,7 @@ plugins {
     id(libs.plugins.android.kotlin.get().pluginId)
     id(libs.plugins.jetbrains.dokka.get().pluginId)
     id(libs.plugins.gradle.metalava.get().pluginId)
-    id(libs.plugins.vanniktech.maven.publish.get().pluginId)
+    `maven-publish`
 }
 
 kotlin {
@@ -87,6 +87,28 @@ android {
             assets.srcDirs("src/androidTest/assets")
         }
     }
+
+    publishing {
+        singleVariant("release") {
+            withJavadocJar()
+            withSourcesJar()
+        }
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            create<MavenPublication>("release") {
+                from(components["release"])
+                groupId = "com.github.kevinnzou"
+                artifactId = "compose-webview"
+                version = "0.33.1-alpha"
+            }
+        }
+    }
+
 }
 
 metalava {
