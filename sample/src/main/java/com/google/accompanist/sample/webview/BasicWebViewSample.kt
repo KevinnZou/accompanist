@@ -53,7 +53,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.sample.AccompanistSampleTheme
+import com.google.accompanist.sample.ui.theme.AccompanistSampleTheme
 import com.google.accompanist.web.AccompanistWebViewClient
 import com.google.accompanist.web.LoadingState
 import com.google.accompanist.web.WebView
@@ -62,6 +62,7 @@ import com.google.accompanist.web.rememberWebViewState
 
 class BasicWebViewSample : ComponentActivity() {
     val initialUrl = "https://google.com"
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

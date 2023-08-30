@@ -61,7 +61,7 @@ class WebViewSaveStateSample : ComponentActivity() {
 
                         Spacer(modifier = Modifier.size(16.dp))
 
-                        NavHost(navController = navController, startDestination = "home") {
+                        NavHost(navController = navController, startDestination = "home", modifier = Modifier.weight(1f)) {
                             composable("home") {
                                 Home()
                             }
@@ -85,7 +85,7 @@ private fun Home() {
         val bundle = webViewState.viewState
         if (bundle == null) {
             // This is the first time load, so load the home page.
-            navigator.loadUrl("https://bbc.com")
+            navigator.loadUrl("https://developer.android.com/")
         }
     }
 
@@ -98,7 +98,7 @@ private fun Home() {
 
 @Composable
 private fun Detail() {
-    val webViewState = rememberWebViewState(url = "https://google.com")
+    val webViewState = rememberWebViewState(url = "https://developer.android.com/jetpack/compose")
 
     WebView(
         state = webViewState,

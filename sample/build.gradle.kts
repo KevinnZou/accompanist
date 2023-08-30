@@ -13,68 +13,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("UnstableApiUsage")
 
+@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id(libs.plugins.android.application.get().pluginId)
     id(libs.plugins.android.kotlin.get().pluginId)
 }
 
 android {
+    namespace = "com.google.accompanist.sample"
     compileSdk = 34
 
     defaultConfig {
         applicationId = "com.google.accompanist.sample"
-        minSdk = 21
+        minSdk = 24
         targetSdk = 33
-
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     buildFeatures {
         compose = true
     }
-
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
-
-    buildTypes {
-        getByName("release") {
-            signingConfig = signingConfigs.getByName("debug")
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-
-    namespace = "com.google.accompanist.sample"
 }
 
 dependencies {
-    implementation(project(":adaptive"))
-    implementation(project(":drawablepainter"))
-    implementation(project(":insets-ui"))
-    implementation(project(":navigation-animation"))
-    implementation(project(":navigation-material"))
-    implementation(project(":pager"))
-    implementation(project(":pager-indicators"))
-    implementation(project(":permissions"))
-    implementation(project(":placeholder"))
-    implementation(project(":placeholder-material"))
-    implementation(project(":flowlayout"))
-    implementation(project(":systemuicontroller"))
-    implementation(project(":swiperefresh"))
-    implementation(project(":testharness")) // Don't use in production! Use the configurations below
-    testImplementation(project(":testharness"))
-    androidTestImplementation(project(":testharness"))
-    implementation(project(":themeadapter-material"))
-    implementation(project(":themeadapter-material3"))
     implementation(project(":web"))
 
     implementation(libs.androidx.appcompat)
@@ -99,6 +91,14 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime)
 
     implementation(libs.kotlin.stdlib)
+    implementation(libs.androidx.navigation.compose)
 
-    lintChecks(project(":permissions-lint"))
+    androidTestImplementation(libs.junit)
+    testImplementation(libs.junit)
+
+    androidTestImplementation(libs.androidx.test.runner)
+    testImplementation(libs.androidx.test.runner)
+
+    androidTestImplementation(libs.compose.ui.test.junit4)
+    testImplementation(libs.compose.ui.test.junit4)
 }

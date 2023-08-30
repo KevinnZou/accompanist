@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 The Android Open Source Project
+ * Copyright 2023 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,133 +14,76 @@
  * limitations under the License.
  */
 
-@file:Suppress("DEPRECATION") // ListActivity
-
 package com.google.accompanist.sample
 
-import android.annotation.SuppressLint
-import android.app.ListActivity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.ListView
-import android.widget.SimpleAdapter
-import java.text.Collator
-import java.util.ArrayList
-import java.util.Collections
-import java.util.Comparator
-import java.util.HashMap
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.google.accompanist.sample.ui.theme.AccompanistTheme
+import com.google.accompanist.sample.webview.BasicWebViewSample
+import com.google.accompanist.sample.webview.WebViewSaveStateSample
+import com.google.accompanist.sample.webview.WrappedContentWebViewSample
 
-/**
- * A [ListActivity] which automatically populates the list of sample activities in this app
- * with the category `com.google.accompanist.sample.SAMPLE_CODE`.
- */
-class MainActivity : ListActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        listAdapter = SimpleAdapter(
-            this,
-            getData(intent.getStringExtra(EXTRA_PATH)),
-            android.R.layout.simple_list_item_1,
-            arrayOf("title"),
-            intArrayOf(android.R.id.text1)
-        )
-
-        listView.isTextFilterEnabled = true
-    }
-
-    private fun getData(prefix: String?): List<Map<String, Any>> {
-        val myData = ArrayList<Map<String, Any>>()
-
-        val mainIntent = Intent(Intent.ACTION_MAIN, null)
-        mainIntent.addCategory("com.google.accompanist.sample.SAMPLE_CODE")
-
-        @SuppressLint("QueryPermissionsNeeded") // Only querying our own Activities
-        val list = packageManager.queryIntentActivities(mainIntent, 0)
-
-        val prefixPath: Array<String>?
-        var prefixWithSlash = prefix
-
-        if (prefix.isNullOrEmpty()) {
-            prefixPath = null
-        } else {
-            prefixPath = prefix.split("/".toRegex()).toTypedArray()
-            prefixWithSlash = "$prefix/"
-        }
-
-        val entries = HashMap<String, Boolean>()
-
-        list.forEach { info ->
-            val labelSeq = info.loadLabel(packageManager)
-            val label = labelSeq?.toString() ?: info.activityInfo.name
-
-            if (prefixWithSlash.isNullOrEmpty() || label.startsWith(prefixWithSlash)) {
-                val labelPath = label.split("/".toRegex()).toTypedArray()
-                val nextLabel = if (prefixPath == null) labelPath[0] else labelPath[prefixPath.size]
-                if (prefixPath?.size ?: 0 == labelPath.size - 1) {
-                    addItem(
-                        data = myData,
-                        name = nextLabel,
-                        intent = activityIntent(
-                            info.activityInfo.applicationInfo.packageName,
-                            info.activityInfo.name
-                        )
-                    )
-                } else {
-                    if (entries[nextLabel] == null) {
-                        addItem(
-                            data = myData,
-                            name = nextLabel,
-                            intent = browseIntent(
-                                if (prefix == "") nextLabel else "$prefix/$nextLabel"
-                            )
-                        )
-                        entries[nextLabel] = true
+        setContent {
+            AccompanistTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
+                            Button(onClick = {
+                                startActivity(
+                                    Intent(
+                                        this@MainActivity,
+                                        BasicWebViewSample::class.java
+                                    )
+                                )
+                            }) {
+                                Text("Basic")
+                            }
+                            Button(onClick = {
+                                startActivity(
+                                    Intent(
+                                        this@MainActivity,
+                                        WebViewSaveStateSample::class.java
+                                    )
+                                )
+                            }) {
+                                Text("Save State")
+                            }
+                            Button(onClick = {
+                                startActivity(
+                                    Intent(
+                                        this@MainActivity,
+                                        WrappedContentWebViewSample::class.java
+                                    )
+                                )
+                            }) {
+                                Text("Wrapped Content")
+                            }
+                        }
                     }
                 }
-            }
-        }
-
-        Collections.sort(myData, sDisplayNameComparator)
-
-        return myData
-    }
-
-    private fun activityIntent(pkg: String, componentName: String): Intent {
-        val result = Intent()
-        result.setClassName(pkg, componentName)
-        return result
-    }
-
-    private fun browseIntent(path: String): Intent {
-        val result = Intent()
-        result.setClass(this, MainActivity::class.java)
-        result.putExtra(EXTRA_PATH, path)
-        return result
-    }
-
-    private fun addItem(data: MutableList<Map<String, Any>>, name: String, intent: Intent) {
-        val temp = mutableMapOf<String, Any>()
-        temp["title"] = name
-        temp["intent"] = intent
-        data += temp
-    }
-
-    override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
-        val map = l.getItemAtPosition(position) as Map<*, *>
-        val intent = map["intent"] as Intent?
-        startActivity(intent)
-    }
-
-    companion object {
-        private const val EXTRA_PATH = "com.example.android.apis.Path"
-
-        private val sDisplayNameComparator = object : Comparator<Map<String, Any>> {
-            private val collator = Collator.getInstance()
-
-            override fun compare(map1: Map<String, Any>, map2: Map<String, Any>): Int {
-                return collator.compare(map1["title"], map2["title"])
             }
         }
     }
