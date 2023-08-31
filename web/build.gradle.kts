@@ -104,7 +104,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "com.github.kevinnzou"
                 artifactId = "compose-webview"
-                version = "0.33.1-alpha"
+                version = "0.33.1"
             }
         }
     }

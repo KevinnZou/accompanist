@@ -27,6 +27,6 @@ repositories {
 }
 
 dependencies {
-    implementation "com.github.kevinnzou:compose-webview:0.33.1-alpha"
+    implementation "com.github.kevinnzou:compose-webview:0.33.1"
 }
 ```
