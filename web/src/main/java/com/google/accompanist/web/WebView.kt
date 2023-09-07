@@ -380,7 +380,7 @@ public sealed class LoadingState {
     /**
      * Describes a WebView that has not yet loaded for the first time.
      */
-    public object Initializing : LoadingState()
+    public data object Initializing : LoadingState()
 
     /**
      * Describes a webview between `onPageStarted` and `onPageFinished` events, contains a
@@ -391,7 +391,7 @@ public sealed class LoadingState {
     /**
      * Describes a webview that has finished loading content.
      */
-    public object Finished : LoadingState()
+    public data object Finished : LoadingState()
 }
 
 /**
@@ -462,10 +462,10 @@ public class WebViewState(webContent: WebContent) {
 @Stable
 public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
     private sealed interface NavigationEvent {
-        object Back : NavigationEvent
-        object Forward : NavigationEvent
-        object Reload : NavigationEvent
-        object StopLoading : NavigationEvent
+        data object Back : NavigationEvent
+        data object Forward : NavigationEvent
+        data object Reload : NavigationEvent
+        data object StopLoading : NavigationEvent
 
         data class LoadUrl(
             val url: String,
