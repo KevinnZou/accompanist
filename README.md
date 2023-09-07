@@ -34,3 +34,7 @@ dependencies {
     implementation "com.github.KevinnZou:compose-webview:0.33.2"
 }
 ```
+
+# License
+Compose WebView is distributed under the terms of the Apache License (Version 2.0). See the [license](https://github.com/KevinnZou/compose-webview/blob/dev/LICENSE) for more information.
+
