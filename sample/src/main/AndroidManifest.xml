@@ -28,7 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Accompanist">
         <activity
-            android:name=".MainActivity"
+            android:name="com.kevinnzou.accompanist.sample.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Accompanist">
@@ -38,21 +38,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".webview.BasicWebViewSample"
+        <activity android:name="com.kevinnzou.accompanist.sample.webview.BasicWebViewSample"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.google.accompanist.sample.SAMPLE_CODE" />
             </intent-filter>
         </activity>
-        <activity android:name=".webview.WebViewSaveStateSample"
+        <activity android:name="com.kevinnzou.accompanist.sample.webview.WebViewSaveStateSample"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.google.accompanist.sample.SAMPLE_CODE" />
             </intent-filter>
         </activity>
-        <activity android:name=".webview.WrappedContentWebViewSample"
+        <activity android:name="com.kevinnzou.accompanist.sample.webview.WrappedContentWebViewSample"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
