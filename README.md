@@ -1,6 +1,8 @@
 # WebView wrapper for Jetpack Compose
 
 [![](https://jitpack.io/v/KevinnZou/compose-webview.svg)](https://jitpack.io/#KevinnZou/compose-webview)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.kevinnzou/compose-webview.svg)](https://search.maven.org/artifact/io.github.kevinnzou/compose-webview)
+![badge-android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
 
 According to the [official documentation](https://medium.com/androiddevelopers/an-update-on-jetpack-compose-accompanist-libraries-august-2023-ac4cbbf059f1) updated on August 2023,
 Jetpack Compose Accompanist library decided to deprecate the Web library with no replacement. 
@@ -23,15 +25,15 @@ This will display a WebView in your Compose layout that shows the URL provided.
 
 ## Download
 
-[![](https://jitpack.io/v/KevinnZou/compose-webview.svg)](https://jitpack.io/#KevinnZou/compose-webview)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.kevinnzou/compose-webview.svg)](https://search.maven.org/artifact/io.github.kevinnzou/compose-webview)
 
 ```groovy
 repositories {
-    maven { url 'https://jitpack.io' }
+    mavenCentral()
 }
 
 dependencies {
-    implementation "com.github.KevinnZou:compose-webview:0.33.2"
+    implementation "io.github.KevinnZou:compose-webview:0.33.3"
 }
 ```
 
