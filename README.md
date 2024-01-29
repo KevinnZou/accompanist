@@ -1,5 +1,8 @@
 # WebView wrapper for Jetpack Compose
 
+> **Note**
+> This library has been migrated to [compose-webview](https://github.com/KevinnZou/compose-webview) to independent from the accompanist library.
+
 [![](https://jitpack.io/v/KevinnZou/compose-webview.svg)](https://jitpack.io/#KevinnZou/compose-webview)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.kevinnzou/compose-webview.svg)](https://search.maven.org/artifact/io.github.kevinnzou/compose-webview)
 ![badge-android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
